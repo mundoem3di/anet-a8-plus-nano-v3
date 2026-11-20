@@ -270,10 +270,9 @@
 #define SWITCHING_NOZZLE_SERVO_NR 0
 // #define SWITCHING_NOZZLE_E1_SERVO_NR 1          // If two servos are used,
 // the index of the second
-#define SWITCHING_NOZZLE_SERVO_ANGLES                                          \
-  {0, 90}
-  // A pair of angles for { E0, E1 }.
-  // For Dual Servo use two pairs: { { lower, raise }, { lower, raise } }
+#define SWITCHING_NOZZLE_SERVO_ANGLES {0, 90}
+// A pair of angles for { E0, E1 }.
+// For Dual Servo use two pairs: { { lower, raise }, { lower, raise } }
 #define SWITCHING_NOZZLE_SERVO_DWELL                                           \
   2500 // Dwell time to wait for servo to make physical move
 #define SWITCHING_NOZZLE_LIFT_TO_PROBE // Lift toolheads out of the way while
@@ -861,12 +860,11 @@
 
 // Filament Heat Capacity (joules/kelvin/mm)
 // Set at runtime with M306 H<value>
-#define FILAMENT_HEAT_CAPACITY_PERMM                                           \
-  {5.6e-3f}
-  // 0.0056 J/K/mm for 1.75mm PLA (0.0149 J/K/mm for 2.85mm PLA).
-  // 0.0036 J/K/mm for 1.75mm PETG (0.0094 J/K/mm for 2.85mm PETG).
-  // 0.00515 J/K/mm for 1.75mm ABS (0.0137 J/K/mm for 2.85mm ABS).
-  // 0.00522 J/K/mm for 1.75mm Nylon (0.0138 J/K/mm for 2.85mm Nylon).
+#define FILAMENT_HEAT_CAPACITY_PERMM {5.6e-3f}
+// 0.0056 J/K/mm for 1.75mm PLA (0.0149 J/K/mm for 2.85mm PLA).
+// 0.0036 J/K/mm for 1.75mm PETG (0.0094 J/K/mm for 2.85mm PETG).
+// 0.00515 J/K/mm for 1.75mm ABS (0.0137 J/K/mm for 2.85mm ABS).
+// 0.00522 J/K/mm for 1.75mm Nylon (0.0138 J/K/mm for 2.85mm Nylon).
 
 // Advanced options
 #define MPC_SMOOTHING_FACTOR                                                   \
@@ -878,9 +876,8 @@
 #define MPC_STEADYSTATE                                                        \
   0.5f // (K/s) Temperature change rate for steady state logic to be enforced.
 
-#define MPC_TUNING_POS                                                         \
-  {X_CENTER, Y_CENTER, 1.0f}
-  // (mm) M306 Autotuning position, ideally bed center at first layer height.
+#define MPC_TUNING_POS {X_CENTER, Y_CENTER, 1.0f}
+// (mm) M306 Autotuning position, ideally bed center at first layer height.
 #define MPC_TUNING_END_Z 10.0f // (mm) M306 Autotuning final Z position.
 // #define EVENT_GCODE_AFTER_MPC_TUNE "M84"          // G-code to execute after
 // MPC tune finished and Z raised.
@@ -1394,11 +1391,14 @@
  * Endstop "Hit" State
  * Set to the state (HIGH or LOW) that applies to each endstop.
  */
-#define X_MIN_ENDSTOP_HIT_STATE HIGH
+#define X_MIN_ENDSTOP_HIT_STATE                                                \
+  LOW // dag end stop contato seco com MKS ROBIN V3
 #define X_MAX_ENDSTOP_HIT_STATE HIGH
-#define Y_MIN_ENDSTOP_HIT_STATE HIGH
+#define Y_MIN_ENDSTOP_HIT_STATE                                                \
+  LOW // dag end stop contato seco com MKS ROBIN V3
 #define Y_MAX_ENDSTOP_HIT_STATE HIGH
-#define Z_MIN_ENDSTOP_HIT_STATE HIGH
+#define Z_MIN_ENDSTOP_HIT_STATE                                                \
+  LOW // dag end stop contato seco com MKS ROBIN V3
 #define Z_MAX_ENDSTOP_HIT_STATE HIGH
 #define I_MIN_ENDSTOP_HIT_STATE HIGH
 #define I_MAX_ENDSTOP_HIT_STATE HIGH
@@ -1461,9 +1461,8 @@
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[,
  * E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT                                            \
-  {160, 160, 400, 427}
-  // XYZE dag alterado para spritee motores de 0.9 graus no X,Y
+#define DEFAULT_AXIS_STEPS_PER_UNIT {160, 160, 400, 427}
+// XYZE dag alterado para spritee motores de 0.9 graus no X,Y
 
 /**
  * Enable support for M92. Disable to save at least ~530 bytes of flash.
@@ -1880,7 +1879,8 @@
 
 // X and Y axis travel speed between probes.
 // Leave undefined to use the average of the current XY homing feedrate.
-#define XY_PROBE_FEEDRATE (133 * 60) // (mm/min)
+#define XY_PROBE_FEEDRATE                                                      \
+  (60 * 60) // dag velocidade deslocamento entre pontos bed (mm/min)
 
 // Feedrate for the first approach when double-probing (MULTIPLE_PROBING == 2)
 #define Z_PROBE_FEEDRATE_FAST (4 * 60) // (mm/min)
@@ -2792,9 +2792,8 @@
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
 // Specify a park position as { X, Y, Z_raise }
-#define NOZZLE_PARK_POINT                                                      \
-  {(X_MIN_POS + 10), (Y_MIN_POS + 10), 10}
-  // dag o Y deve ser min para mesa ir para traz no momento da pausa
+#define NOZZLE_PARK_POINT {(X_MIN_POS + 10), (Y_MIN_POS + 10), 10}
+// dag o Y deve ser min para mesa ir para traz no momento da pausa
 #define NOZZLE_PARK_MOVE                                                       \
   0 // Park motion: 0 = XY Move, 1 = X Only, 2 = Y Only, 3 = X before Y, 4 = Y
     // before X
@@ -3000,7 +2999,7 @@
  * SD Card support is disabled by default. If your controller has an SD slot,
  * you must uncomment the following option or it won't work.
  */
-// #define SDSUPPORT
+#define SDSUPPORT // dag necessrio para habilitar menu de imprimir
 
 /**
  * SD CARD: ENABLE CRC
@@ -3081,14 +3080,15 @@
 // produce one step. Should be increased for high-resolution encoders.
 //
 #define ENCODER_PULSES_PER_STEP                                                \
-  20 // dag ajuste do potenciometro mks nano v3 para ajuste dos parametros.
+  4 // dag ajuste do potenciometro mks nano v3 para ajuste dos parametros.
 
 //
 // Use this option to override the number of step signals required to
 // move between next/prev menu items.
 //
 #define ENCODER_STEPS_PER_MENU_ITEM                                            \
-  1 // dag ajuste do potenciometro mks nano v3 para ajuste dos menus.
+  1 // dag deve ficar em 1 senao atrapalha o touch do menu ajuste do
+    // potenciometro mks nano v3 para ajuste dos menus.
 
 /**
  * Encoder Direction Options
@@ -3912,7 +3912,8 @@
  * frequency which is not as annoying as with the hardware PWM. On the other
  * hand, if this frequency is too low, you should also increment SOFT_PWM_SCALE.
  */
-// #define FAN_SOFT_PWM
+#define FAN_SOFT_PWM // dag corrige velocidade da fan para que funcionem abaixo
+                     // 49%
 
 /**
  * Incrementing this by 1 will double the software PWM frequency, affecting
@@ -3921,7 +3922,7 @@
  * control positions.
  * :[0,1,2,3,4,5,6,7]
  */
-#define SOFT_PWM_SCALE 0
+#define SOFT_PWM_SCALE 1 // dag ajuda a potenciliazar soft pwm
 
 /**
  * If SOFT_PWM_SCALE is set to a value higher than 0, dithering can be used to
