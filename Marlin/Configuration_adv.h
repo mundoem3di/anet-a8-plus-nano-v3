@@ -2020,7 +2020,6 @@
  * inserido na placa (mesmo que você imprima pelo pen drive) para que o arquivo
  * oculto de recuperação seja gravado sem falhas.
  */
-
 #define POWER_LOSS_RECOVERY // dag habilitar continuar impressao em caso de
                             // queda energia
 #if ENABLED(POWER_LOSS_RECOVERY)
@@ -2030,11 +2029,14 @@
 // #define PLR_BED_THRESHOLD BED_MAXTEMP // (°C) Skip user confirmation at or
 // above this bed temperature (0 to disable)
 
-// #define POWER_LOSS_PIN             -1 // dag padrao mks nano v3 sem modulo
-// externo Pin to detect power-loss. Set to -1 to disable default pin on boards
-// without module, or comment to use board default. #define POWER_LOSS_STATE
-// HIGH // State of pin indicating power-loss #define POWER_LOSS_PULLUP // Set
-// pullup / pulldown as appropriate for your sensor #define POWER_LOSS_PULLDOWN
+#define POWER_LOSS_PIN                                                         \
+  -1 // dag padrao mks nano v3 sem modulo externo Pin to detect power-loss. Set
+     // to -1 to disable default pin on boards without module, or comment to use
+     // board default.
+#define POWER_LOSS_STATE                                                       \
+  HIGH // dag habilitar State of pin indicating power-loss
+// #define POWER_LOSS_PULLUP             // Set pullup / pulldown as appropriate
+// for your sensor #define POWER_LOSS_PULLDOWN
 
 // #define POWER_LOSS_ZRAISE        2    // (mm) Z axis raise on resume (on
 // power-loss with UPS) #define POWER_LOSS_PURGE_LEN    20    // (mm) Length of
@@ -2253,7 +2255,9 @@
 #if ENABLED(MULTI_VOLUME)
 #define VOLUME_SD_ONBOARD
 #define VOLUME_USB_FLASH_DRIVE
-#define DEFAULT_VOLUME SD_ONBOARD // :[ 'SD_ONBOARD', 'USB_FLASH_DRIVE' ]
+#define DEFAULT_VOLUME                                                         \
+  USB_FLASH_DRIVE // dag escolha ao clicar no icone qual vai abrir primeiro sd
+                  // card ou usb :[ 'SD_ONBOARD', 'USB_FLASH_DRIVE' ]
 #define DEFAULT_SHARED_VOLUME                                                  \
   USB_FLASH_DRIVE // :[ 'SD_ONBOARD', 'USB_FLASH_DRIVE' ]
 #endif
@@ -3336,15 +3340,15 @@
 #define ADVANCED_PAUSE_FEATURE // dag configuracao da pausa da impressao
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
 #define PAUSE_PARK_RETRACT_FEEDRATE                                            \
-  30 // dag Retração inicial rápida (mm/s) Initial retract feedrate.
+  30 // dag Retração inicial suave (mm/s) Initial retract feedrate.
 #define PAUSE_PARK_RETRACT_LENGTH                                              \
   2 // (mm) Initial retract.
     // This short retract is done immediately, before parking the nozzle.
 #define FILAMENT_CHANGE_UNLOAD_FEEDRATE                                        \
-  40 // dag velocidade ejetar filamento (mm/s) Unload filament feedrate. This
+  15 // dag velocidade ejetar filamento (mm/s) Unload filament feedrate. This
      // can be pretty fast.
 #define FILAMENT_CHANGE_UNLOAD_ACCEL                                           \
-  50 // dag sprite extruder (mm/s^2) Lower acceleration may allow a faster
+  25 // dag sprite extruder (mm/s^2) Lower acceleration may allow a faster
      // feedrate.
 #define FILAMENT_CHANGE_UNLOAD_LENGTH                                          \
   40 // dag distancia para retirar filamento do bico ate engrenagem (mm) The
@@ -3353,29 +3357,29 @@
      //   For direct drive, the full length of the nozzle.
      //   Set to 0 for manual unloading.
 #define FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE                                     \
-  10 // dag Velocidade lenta para engatar o filamento (mm/s) Slow move when
-     // starting load.
+  5 // dag Velocidade lenta para engatar o filamento (mm/s) Slow move when
+    // starting load.
 #define FILAMENT_CHANGE_SLOW_LOAD_LENGTH                                       \
   5 // dag Puxa 5 mm devagar para morder o filamento sem mastigar (mm) Slow
     // length, to allow time to insert material. 0 to disable start loading and
     // skip to fast load only
 #define FILAMENT_CHANGE_FAST_LOAD_FEEDRATE                                     \
-  40 // dag Velocidade de carga até o bico (mm/s) Load filament feedrate. This
+  15 // dag Velocidade de carga até o bico (mm/s) Load filament feedrate. This
      // can be pretty fast.
 #define FILAMENT_CHANGE_FAST_LOAD_ACCEL                                        \
-  50 // dag (mm/s^2) Lower acceleration may allow a faster feedrate.
+  25 // dag (mm/s^2) Lower acceleration may allow a faster feedrate.
 #define FILAMENT_CHANGE_FAST_LOAD_LENGTH                                       \
-  40 // dag Distância das engrenagens até a ponta do bico  (mm) Load length of
-     // filament, from extruder gear to nozzle.
+  35 // dag distancia engrenagem ate bico Distância das engrenagens até a ponta
+     // do bico  (mm) Load length of filament, from extruder gear to nozzle.
      //   For Bowden, the full length of the tube and nozzle.
      //   For direct drive, the full length of the nozzle.
 // #define ADVANCED_PAUSE_CONTINUOUS_PURGE       // Purge continuously up to the
 // purge length until interrupted.
 #define ADVANCED_PAUSE_PURGE_FEEDRATE                                          \
-  10 // dag velocidade da purga (mm/s) Extrude feedrate (after loading). Should
-     // be slower than load feedrate.
+  8 // dag velocidade da purga (mm/s) Extrude feedrate (after loading). Should
+    // be slower than load feedrate.
 #define ADVANCED_PAUSE_PURGE_LENGTH                                            \
-  20 // dag tamanho da purga para limpar filamento anterior (mm) Length to
+  15 // dag tamanho da purga para limpar filamento anterior (mm) Length to
      // extrude after loading.
      //   Set to 0 for manual extrusion.
      //   Filament can be extruded repeatedly from the Filament Change menu
@@ -3393,7 +3397,7 @@
 #define FILAMENT_UNLOAD_PURGE_LENGTH                                           \
   8 // (mm) An unretract is done, then this length is purged.
 #define FILAMENT_UNLOAD_PURGE_FEEDRATE                                         \
-  40 // dag (mm/s) feedrate to purge before unload
+  8 // dag (mm/s) feedrate to purge before unload
 
 #define PAUSE_PARK_NOZZLE_TIMEOUT                                              \
   120 // dag tempo para trocar rolo sem esfriar bico (seconds) Time limit before
